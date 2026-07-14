@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, ResponsiveContainer } from 'recharts';
 import { Plus, X } from 'lucide-react';
+import { API_BASE_URL } from '../config/api';
 
 export default function ThemeMatrix({ 
   country, 
@@ -21,7 +22,7 @@ export default function ThemeMatrix({
       setError(null);
       try {
         // Fetch theme indicators for this country
-        const themeRes = await fetch(`http://localhost:8000/api/theme_indicators/${country.id}?theme=${theme}`);
+        const themeRes = await fetch(`${API_BASE_URL}/api/theme_indicators/${country.id}?theme=${theme}`);
         if (!themeRes.ok) {
           throw new Error('Failed to fetch theme indicators');
         }
@@ -35,7 +36,7 @@ export default function ThemeMatrix({
         
         const dataPromises = themeIndicators.map(async (indicator) => {
           const res = await fetch(
-            `http://localhost:8000/api/data?series_id=${indicator.id}&country_id=${country.id}&start_date=${startDate.toISOString().split('T')[0]}&end_date=${endDate.toISOString().split('T')[0]}`
+            `${API_BASE_URL}/api/data?series_id=${indicator.id}&country_id=${country.id}&start_date=${startDate.toISOString().split('T')[0]}&end_date=${endDate.toISOString().split('T')[0]}`
           );
           if (!res.ok) {
             return { [indicator.id]: [] };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, ChevronDown, ChevronUp } from 'lucide-react';
+import { API_BASE_URL } from '../config/api';
 
 export default function ControlPanel({ 
   selectedCountry, 
@@ -24,7 +25,7 @@ export default function ControlPanel({
     }
     
     setLoadingIndicators(true);
-    fetch(`http://localhost:8000/api/indicators/${selectedCountry.id}`)
+    fetch(`${API_BASE_URL}/api/indicators/${selectedCountry.id}`)
       .then(res => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -57,12 +58,12 @@ export default function ControlPanel({
       
       // Pass both series_id and country_id to the backend
       const response = await fetch(
-        `http://localhost:8000/api/data?series_id=${selectedIndicator}&country_id=${selectedCountry.id}&start_date=${startDate.toISOString().split('T')[0]}&end_date=${endDate.toISOString().split('T')[0]}`
+        `${API_BASE_URL}/api/data?series_id=${selectedIndicator}&country_id=${selectedCountry.id}&start_date=${startDate.toISOString().split('T')[0]}&end_date=${endDate.toISOString().split('T')[0]}`
       );
       
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to fetch data');
+        throw new Error(errorData.error || errorData.detail || 'Failed to fetch data');
       }
       
       const data = await response.json();

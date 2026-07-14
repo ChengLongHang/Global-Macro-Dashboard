@@ -26,7 +26,13 @@ export function getCountryColor(countryId) {
     'ITA': '#fd79a8',
     'ESP': '#fdcb6e',
     'MEX': '#ff9f43',
-    'KOR': '#a29bfe'
+    'KOR': '#a29bfe',
+    'RUS': '#00cec9',
+    'SAU': '#00b894',
+    'ZAF': '#e17055',
+    'TUR': '#d63031',
+    'IDN': '#fab1a0',
+    'ARG': '#74b9ff'
   };
   return colors[countryId] || '#6bcbff';
 }

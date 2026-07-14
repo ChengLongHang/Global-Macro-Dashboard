@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Sphere, Html, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import { latLngToVector3, getCountryColor } from '../utils/geoUtils';
+import { API_BASE_URL } from '../config/api';
 
 function CountryMarker({ country, onClick, selected, onHover }) {
   const [hovered, setHovered] = useState(false);
@@ -82,7 +83,7 @@ export default function Globe({ onSelectCountry, selectedCountry, onHoverCountry
   const [countries, setCountries] = useState([]);
   
   useEffect(() => {
-    fetch('http://localhost:8000/api/countries')
+    fetch(`${API_BASE_URL}/api/countries`)
       .then(res => res.json())
       .then(setCountries)
       .catch(console.error);
